@@ -58,6 +58,7 @@ class ScoresTable(Base):
         Index("scores_play_time_index", play_time),
         Index("scores_userid_index", userid),
         Index("scores_online_checksum_index", online_checksum),
+        Index("scores_match_id_index", match_id)
     )
 
 
@@ -84,6 +85,7 @@ READ_PARAMS = (
     ScoresTable.userid,
     ScoresTable.perfect,
     ScoresTable.online_checksum,
+    ScoresTable.match_id
 )
 
 
