@@ -11,7 +11,7 @@ T = TypeVar("T", bound="BaseModel")
 
 
 class BaseModel(_pydantic_BaseModel):
-    model_config = ConfigDict(str_strip_whitespace=True)
+    model_config = ConfigDict(str_strip_whitespace=True,extra="allow")
 
     @classmethod
     def from_mapping(cls: type[T], mapping: Mapping[str, Any]) -> T:
