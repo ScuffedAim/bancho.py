@@ -34,3 +34,4 @@ class Score(BaseModel):
     play_time: datetime
     time_elapsed: int
     perfect: bool
+    match_score: int

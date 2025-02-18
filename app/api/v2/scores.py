@@ -10,7 +10,10 @@ from app.api.v2.common import responses
 from app.api.v2.common.responses import Failure
 from app.api.v2.common.responses import Success
 from app.api.v2.models.scores import Score
+from app.api.v2.models.players import Player
 from app.repositories import scores as scores_repo
+from app.repositories import matchscore as matchscores_repo
+from app.repositories.matchscore import MatchScore
 
 router = APIRouter()
 
@@ -64,4 +67,15 @@ async def get_score(score_id: int) -> Success[Score] | Failure:
         )
 
     response = Score.from_mapping(data)
+    return responses.success(response)
+
+@router.get("/scores/match/{match_id}")
+async def get_match_score(match_id: int) -> Success[MatchScore] | Failure:
+    data = await matchscores_repo.fetch_one(id=match_id)
+    if data is None:
+        return responses.failure(
+            message="´Match not found.",
+            status_code=status.HTTP_404_NOT_FOUND,
+        )
+    response = MatchScore.from_mapping(data)
     return responses.success(response)

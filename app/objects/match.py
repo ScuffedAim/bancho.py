@@ -18,6 +18,8 @@ from app.constants.gamemodes import GameMode
 from app.constants.mods import Mods
 from app.objects.beatmap import Beatmap
 from app.repositories.tourney_pools import TourneyPool
+from app.repositories import matchscore
+from app.repositories.matchscore import Score
 from app.utils import escape_enum
 from app.utils import pymysql_encode
 
@@ -386,6 +388,7 @@ class Match:
                     # score found, add to our scores dict if != 0.
                     score: int = getattr(rc_score, win_cond)
                     if score:
+                        matchscore.create(rc_score.bmap.md5,rc_score.score,rc_score.pp,rc_score.acc,rc_score.max_combo,rc_score.mods,rc_score.n300,rc_score.n100,rc_score.n50,rc_score.nmiss,rc_score.ngeki,rc_score.nkatu,rc_score.grade,rc_score.status,rc_score.mode,datetime.now(),0,rc_score.client_flags,rc_score.player.id,rc_score.perfect,0,self.id)
                         key: MatchTeams | Player = s.player if ffa else s.team
                         scores[key] += score
 
@@ -400,7 +403,7 @@ class Match:
                     # submit a score in time, and skip them.
                     didnt_submit.append(s.player)
                     break
-
+        
         # all scores retrieved, update the match.
         return scores, didnt_submit
 

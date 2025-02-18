@@ -1460,6 +1460,11 @@ async def mp_start(ctx: Context, match: Match) -> str | None:
     match.start()
     return "Good luck!"
 
+@mp_commands.add(Privileges.UNRESTRICTED)
+@ensure_match
+async def mp_info(ctx: Context, match: Match) -> str | None:
+    _id = match.id
+    return f"the match ID is {_id}"
 
 @mp_commands.add(Privileges.UNRESTRICTED, aliases=["a"])
 @ensure_match
