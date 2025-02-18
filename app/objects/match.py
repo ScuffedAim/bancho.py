@@ -556,5 +556,3 @@ class Match:
 
         for line in msg:
             self.chat.send_bot(line)
-
-    async def log_scores(self):
