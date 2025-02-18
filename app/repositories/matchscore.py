@@ -24,7 +24,7 @@ from app.repositories import Base
 class ScoresTable(Base):
     __tablename__ = "matchscore"
 
-    match_id = Column("matchid", Integer, nullable=False)
+    match_id = Column("match_id", Integer, nullable=False)
     id = Column("id", Integer, nullable=False, primary_key=True, autoincrement=True)
     map_md5 = Column("map_md5", String(32), nullable=False)
     score = Column("score", Integer, nullable=False)
@@ -140,7 +140,7 @@ async def create(
     perfect: int,
     online_checksum: str,
     match_id: int,
-) -> Score:
+) -> MatchScore:
     insert_stmt = insert(ScoresTable).values(
         map_md5=map_md5,
         score=score,
@@ -170,7 +170,7 @@ async def create(
     select_stmt = select(*READ_PARAMS).where(ScoresTable.id == rec_id)
     _score = await app.state.services.database.fetch_one(select_stmt)
     assert _score is not None
-    return cast(Score, _score)
+    return cast(MatchScore, _score)
 
 
 async def fetch_one(match_id: int) -> MatchScore | None:
