@@ -151,7 +151,7 @@ async def create(
 async def fetch_one(match_id: int) -> MatchScore | None:
     select_stmt = select(*READ_PARAMS).where(ScoresTable.match_id == match_id)
     _score = await app.state.services.database.fetch_one(select_stmt)
-    return cast(MatchScore | None, _score)
+    return cast(MatchScore, _score)
 
 
 async def fetch_count(
