@@ -140,10 +140,11 @@ async def create(
         match_id=match_id
     )
     rec_id = await app.state.services.database.execute(insert_stmt)
-
+    print(rec_id)
     select_stmt = select(*READ_PARAMS).where(ScoresTable.id == rec_id)
     _score = await app.state.services.database.fetch_one(select_stmt)
-    #assert _score is not None # we just dont care really
+    print(score)
+    assert _score is not None # we just dont care really
     return cast(MatchScore, _score)
 
 
