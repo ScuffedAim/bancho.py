@@ -386,7 +386,7 @@ class Match:
                     and rc_score.server_time > max_age
                 ):
                     print("Creating a new score!!!!!!!!!!! in the db thing")
-                    matchscore.create(rc_score.bmap.md5,rc_score.score,rc_score.pp,rc_score.acc,rc_score.max_combo,rc_score.mods,rc_score.n300,rc_score.n100,rc_score.n50,rc_score.nmiss,rc_score.ngeki,rc_score.nkatu,rc_score.grade,rc_score.status,rc_score.mode,datetime.now(),0,rc_score.client_flags,rc_score.player.id,rc_score.perfect,0,self.id)
+                    await matchscore.create(rc_score.bmap.md5,rc_score.score,rc_score.pp,rc_score.acc,rc_score.max_combo,rc_score.mods,rc_score.n300,rc_score.n100,rc_score.n50,rc_score.nmiss,rc_score.ngeki,rc_score.nkatu,rc_score.grade,rc_score.status,rc_score.mode,datetime.now(),0,rc_score.client_flags,rc_score.player.id,rc_score.perfect,0,self.id)
                     # score found, add to our scores dict if != 0.
                     score: int = getattr(rc_score, win_cond)
                     if score:
