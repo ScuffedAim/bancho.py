@@ -15,4 +15,5 @@ class BaseModel(_pydantic_BaseModel):
 
     @classmethod
     def from_mapping(cls: type[T], mapping: Mapping[str, Any]) -> T:
-        return cls(**{k: mapping[k] for k in cls.model_fields})
+            print(mapping)
+            return cls(**{k: mapping[k] for k in cls.model_fields})
