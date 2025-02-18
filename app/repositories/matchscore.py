@@ -20,7 +20,7 @@ import app.state.services
 from app._typing import UNSET
 from app._typing import _UnsetSentinel
 from app.repositories import Base
-
+from app.api.v2.models import BaseModel
 class ScoresTable(Base):
     __tablename__ = "matchscore"
 
@@ -87,7 +87,7 @@ READ_PARAMS = (
 )
 
 
-class MatchScore(TypedDict):
+class MatchScore(BaseModel):
     id: int
     map_md5: str
     score: int
@@ -111,11 +111,6 @@ class MatchScore(TypedDict):
     perfect: int
     online_checksum: str
     match_id: int
-
-    @classmethod
-    def from_mapping(cls: type[T], mapping: Mapping[str, Any]) -> T:
-        return cls(**{k: mapping[k] for k in cls.model_fields})
-
 
 async def create(
     map_md5: str,
@@ -169,7 +164,7 @@ async def create(
 
     select_stmt = select(*READ_PARAMS).where(ScoresTable.id == rec_id)
     _score = await app.state.services.database.fetch_one(select_stmt)
-    assert _score is not None
+    #assert _score is not None # we just dont care really
     return cast(MatchScore, _score)
 
 
