@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import TypedDict
+from typing_extensions import TypedDict
 from typing import cast
 
 from sqlalchemy import Column
@@ -111,7 +111,7 @@ class MatchScore(TypedDict):
     perfect: int
     online_checksum: str
     match_id: int
-    
+
     @classmethod
     def from_mapping(cls: type[T], mapping: Mapping[str, Any]) -> T:
         return cls(**{k: mapping[k] for k in cls.model_fields})
