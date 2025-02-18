@@ -13,7 +13,7 @@ from app.api.v2.models.scores import Score
 from app.api.v2.models.players import Player
 from app.repositories import scores as scores_repo
 from app.repositories import matchscore as matchscores_repo
-from app.api.v2.models.matchscore import MatchScore
+from app.api.v2.models.scores import MatchScore
 
 router = APIRouter()
 

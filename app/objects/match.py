@@ -19,7 +19,7 @@ from app.constants.mods import Mods
 from app.objects.beatmap import Beatmap
 from app.repositories.tourney_pools import TourneyPool
 from app.repositories import matchscore
-from app.repositories.matchscore import MatchScore
+from app.api.v2.models.scores import MatchScore
 from app.utils import escape_enum
 from app.utils import pymysql_encode
 

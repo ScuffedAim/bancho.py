@@ -20,7 +20,7 @@ import app.state.services
 from app._typing import UNSET
 from app._typing import _UnsetSentinel
 from app.repositories import Base
-from app.api.v2.models.matchscore import MatchScore
+from app.api.v2.models.scores import MatchScore
 class ScoresTable(Base):
     __tablename__ = "matchscore"
 
