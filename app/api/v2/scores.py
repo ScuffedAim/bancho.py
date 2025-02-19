@@ -100,7 +100,7 @@ async def get_matches(
         status=status,
         mode=mode,
         user_id=user_id,)
-    response = [MatchScore.from_mapping(rec).match_id for rec in data]
+    response = [MatchScore.from_mapping(rec).match_id for rec in data if MatchScore.from_mapping(rec).match_id not in response]
 
     return responses.success(
         content=response,
