@@ -94,18 +94,12 @@ async def get_matches(
         user_id=user_id,
         page=page,
         page_size=page_size,)
-    total = await matchscores_repo.fetch_count(
-        map_md5=map_md5,
-        mods=mods,
-        status=status,
-        mode=mode,
-        user_id=user_id,)
     response = list(set([MatchScore.from_mapping(rec).match_id for rec in data]))
 
     return responses.success(
         content=response,
         meta={
-            "total": total,
+            "total": len(response),
             "page": page,
             "page_size": page_size,
         },
