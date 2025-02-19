@@ -72,12 +72,7 @@ async def get_score(score_id: int) -> Success[Score] | Failure:
 @router.get("/scores/match/{match_id}")
 async def get_match_score(match_id: int) -> Success[MatchScore] | Failure:
     print("Getting match score for match")
-    data = await matchscores_repo.fetch_one(match_id=match_id)
-    if data is None:
-        return responses.failure(
-            message="Match not found.",
-            status_code=status.HTTP_404_NOT_FOUND,
-        )
+    data = await matchscores_repo.fetch_many(match_id=match_id)
     print(data)
-    response = MatchScore.from_mapping(data)
+    response = [MatchScore.from_mapping(rec) for rec in data]
     return responses.success(response)
