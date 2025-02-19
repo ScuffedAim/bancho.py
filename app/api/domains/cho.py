@@ -1400,7 +1400,7 @@ class MatchCreate(BasePacket):
             player.send_bot("Failed to create match (no slots available).")
             player.enqueue(app.packets.match_join_fail())
             return
-        match_id = random.randint(0,2147483647)
+        dbid = random.randint(0,2147483647)
 
         # create the channel and add it
         # to the global channel list as
@@ -1428,6 +1428,7 @@ class MatchCreate(BasePacket):
             freemods=bool(self.match_data.freemods),
             seed=self.match_data.seed,
             chat_channel=chat_channel,
+            dbid=dbid
         )
 
         app.state.sessions.matches[match_id] = match
