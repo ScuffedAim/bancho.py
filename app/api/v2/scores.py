@@ -102,7 +102,7 @@ async def get_matches(
         user_id=user_id,
         page=page,
         page_size=page_size,)
-    response = [Score.from_mapping(rec.match_id) for rec in data]
+    response = [rec.match_id for rec in data]
 
     return responses.success(
         content=response,
