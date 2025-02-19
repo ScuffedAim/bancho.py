@@ -77,7 +77,7 @@ async def get_match_score(match_id: int) -> Success[MatchScore] | Failure:
     response = [MatchScore.from_mapping(rec) for rec in data]
     return responses.success(response)
 
-@router.get("/scores/matches")
+@router.get("/matches")
 async def get_matches(
     map_md5: str | None = None,
     mods: int | None = None,
