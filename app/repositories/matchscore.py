@@ -155,7 +155,7 @@ async def fetch_one(match_id: int) -> MatchScore | None:
 
 
 async def fetch_count(
-    match_id: int,
+    match_id: int | None = None,
     map_md5: str | None = None,
     mods: int | None = None,
     status: int | None = None,
