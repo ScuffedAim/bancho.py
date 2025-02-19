@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Literal
 from typing import TypedDict
 from zoneinfo import ZoneInfo
-
+import random
 import bcrypt
 import databases.core
 from fastapi import APIRouter
@@ -1400,6 +1400,7 @@ class MatchCreate(BasePacket):
             player.send_bot("Failed to create match (no slots available).")
             player.enqueue(app.packets.match_join_fail())
             return
+        match_id = random.randint(0,2147483647)
 
         # create the channel and add it
         # to the global channel list as
@@ -1766,6 +1767,8 @@ class MatchComplete(BasePacket):
         )
         player.match.enqueue_state()
 
+        bmap = await Beatmap.from_md5(player.match.map_md5)
+        await player.match.record_scores(was_playing,bmap,player.match.map_md5,player.match.win_condition)
         if player.match.is_scrimming:
             # determine winner, update match points & inform players.
             asyncio.create_task(player.match.update_matchpoints(was_playing))

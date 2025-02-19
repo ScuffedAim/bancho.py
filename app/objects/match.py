@@ -346,6 +346,38 @@ class Match:
         self.winners.clear()
         self.bans.clear()
 
+
+    async def record_scores(was_playing: Sequence[Slot],map_md5,bmap,win_cond):
+        for s in was_playing:
+            # continue trying to fetch each player's
+            # scores until they've all been submitted.
+            while True:
+                assert s.player is not None
+                rc_score = s.player.recent_score
+
+                max_age = datetime.now() - timedelta(
+                    seconds=bmap.total_length + time_waited + 0.5,
+                )
+
+                if (
+                    rc_score
+                    and rc_score.bmap
+                    and rc_score.bmap.md5 == map_md5
+                    and rc_score.server_time > max_age
+                ):
+                    
+                    # score found, add to our scores dict if != 0.
+                    score: int = getattr(rc_score, win_cond)
+                    if score:
+                        print("Creating a new score!!!!!!!!!!! in the db thing")
+                        await matchscore.create(rc_score.bmap.md5,rc_score.score,rc_score.pp,rc_score.acc,rc_score.max_combo,rc_score.mods,rc_score.n300,rc_score.n100,rc_score.n50,rc_score.nmiss,rc_score.ngeki,rc_score.nkatu,rc_score.grade,rc_score.status,rc_score.mode,datetime.now(),0,rc_score.client_flags,rc_score.player.id,rc_score.perfect,0,self.id)
+
+                    break
+
+                # wait 0.5s and try again
+                await asyncio.sleep(0.5)
+                time_waited += 0.5
+        
     async def await_submissions(
         self,
         was_playing: Sequence[Slot],
@@ -385,13 +417,12 @@ class Match:
                     and rc_score.bmap.md5 == self.map_md5
                     and rc_score.server_time > max_age
                 ):
-                    print("Creating a new score!!!!!!!!!!! in the db thing")
-                    await matchscore.create(rc_score.bmap.md5,rc_score.score,rc_score.pp,rc_score.acc,rc_score.max_combo,rc_score.mods,rc_score.n300,rc_score.n100,rc_score.n50,rc_score.nmiss,rc_score.ngeki,rc_score.nkatu,rc_score.grade,rc_score.status,rc_score.mode,datetime.now(),0,rc_score.client_flags,rc_score.player.id,rc_score.perfect,0,self.id)
+                    
                     # score found, add to our scores dict if != 0.
                     score: int = getattr(rc_score, win_cond)
                     if score:
                         
-                        
+                        await self.record_scores(was_playing,self.map_md5,rc_score.bmap,win_cond)
                         key: MatchTeams | Player = s.player if ffa else s.team
                         scores[key] += score
 
