@@ -76,3 +76,39 @@ async def get_match_score(match_id: int) -> Success[MatchScore] | Failure:
     print(data)
     response = [MatchScore.from_mapping(rec) for rec in data]
     return responses.success(response)
+
+@router.get("/scores/matches")
+async def get_matches(
+    map_md5: str | None = None,
+    mods: int | None = None,
+    status: int | None = None,
+    mode: int | None = None,
+    user_id: int | None = None,
+    page: int = Query(1, ge=1),
+    page_size: int = Query(50, ge=1, le=100),) -> Success[int] | Failure:
+    data = await matchscores_repo.fetch_many(
+        map_md5=map_md5,
+        mods=mods,
+        status=status,
+        mode=mode,
+        user_id=user_id,
+        page=page,
+        page_size=page_size,)
+    total = await matchscores_repo.fetch_count(
+        map_md5=map_md5,
+        mods=mods,
+        status=status,
+        mode=mode,
+        user_id=user_id,
+        page=page,
+        page_size=page_size,)
+    response = [Score.from_mapping(rec.match_id) for rec in data]
+
+    return responses.success(
+        content=response,
+        meta={
+            "total": total,
+            "page": page,
+            "page_size": page_size,
+        },
+    )

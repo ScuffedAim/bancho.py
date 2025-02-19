@@ -181,7 +181,7 @@ async def fetch_count(
 
 
 async def fetch_many(
-    match_id: int,
+    match_id: int | None = None,
     map_md5: str | None = None,
     mods: int | None = None,
     status: int | None = None,
@@ -202,7 +202,8 @@ async def fetch_many(
         select_stmt = select_stmt.where(ScoresTable.mode == mode)
     if user_id is not None:
         select_stmt = select_stmt.where(ScoresTable.userid == user_id)
-    select_stmt = select_stmt.where(ScoresTable.match_id == match_id)
+    if match_id is not None:
+        select_stmt = select_stmt.where(ScoresTable.match_id == match_id)
 
     if page is not None and page_size is not None:
         select_stmt = select_stmt.limit(page_size).offset((page - 1) * page_size)
