@@ -99,9 +99,7 @@ async def get_matches(
         mods=mods,
         status=status,
         mode=mode,
-        user_id=user_id,
-        page=page,
-        page_size=page_size,)
+        user_id=user_id,)
     response = [rec.match_id for rec in data]
 
     return responses.success(
