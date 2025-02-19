@@ -1769,7 +1769,7 @@ class MatchComplete(BasePacket):
         player.match.enqueue_state()
 
         bmap = await Beatmap.from_md5(player.match.map_md5)
-        await player.match.record_scores(was_playing,bmap,player.match.map_md5,player.match.win_condition)
+        await player.match.record_scores(was_playing,player.match.map_md5,bmap,player.match.win_condition)
         if player.match.is_scrimming:
             # determine winner, update match points & inform players.
             asyncio.create_task(player.match.update_matchpoints(was_playing))
