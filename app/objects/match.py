@@ -352,7 +352,7 @@ class Match:
     async def record_scores(self, was_playing: Sequence[Slot],map_md5,bmap,win_cond):
         time_waited = 0.0
         if bmap == None:
-            bmap = Beatmap.from_md5(map_md5)
+            bmap = await Beatmap.from_md5(map_md5)
         for s in was_playing:
             # continue trying to fetch each player's
             # scores until they've all been submitted.
