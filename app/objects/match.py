@@ -147,6 +147,7 @@ class Match:
     def __init__(
         self,
         id: int,
+        dbid: int,
         name: str,
         password: str,
         has_public_history: bool,
@@ -163,6 +164,7 @@ class Match:
         chat_channel: Channel,
     ) -> None:
         self.id = id
+        self.dbid = dbid
         self.name = name
         self.passwd = password
         self.has_public_history = has_public_history
@@ -347,7 +349,7 @@ class Match:
         self.bans.clear()
 
 
-    async def record_scores(was_playing: Sequence[Slot],map_md5,bmap,win_cond):
+    async def record_scores(self, was_playing: Sequence[Slot],map_md5,bmap,win_cond):
         for s in was_playing:
             # continue trying to fetch each player's
             # scores until they've all been submitted.
@@ -370,7 +372,7 @@ class Match:
                     score: int = getattr(rc_score, win_cond)
                     if score:
                         print("Creating a new score!!!!!!!!!!! in the db thing")
-                        await matchscore.create(rc_score.bmap.md5,rc_score.score,rc_score.pp,rc_score.acc,rc_score.max_combo,rc_score.mods,rc_score.n300,rc_score.n100,rc_score.n50,rc_score.nmiss,rc_score.ngeki,rc_score.nkatu,rc_score.grade,rc_score.status,rc_score.mode,datetime.now(),0,rc_score.client_flags,rc_score.player.id,rc_score.perfect,0,self.id)
+                        await matchscore.create(rc_score.bmap.md5,rc_score.score,rc_score.pp,rc_score.acc,rc_score.max_combo,rc_score.mods,rc_score.n300,rc_score.n100,rc_score.n50,rc_score.nmiss,rc_score.ngeki,rc_score.nkatu,rc_score.grade,rc_score.status,rc_score.mode,datetime.now(),0,rc_score.client_flags,rc_score.player.id,rc_score.perfect,0,self.dbid)
 
                     break
 

@@ -1464,7 +1464,7 @@ async def mp_start(ctx: Context, match: Match) -> str | None:
 @ensure_match
 async def mp_id(ctx: Context, match: Match) -> str | None:
     """Get the current match ID."""
-    _id = match.id
+    _id = match.dbid
     return f"the match ID is {_id}"
 
 @mp_commands.add(Privileges.UNRESTRICTED, aliases=["a"])
