@@ -1772,8 +1772,7 @@ class MatchComplete(BasePacket):
             win_cond = "pp"
         else:
             win_cond = ("score", "acc", "max_combo", "score")[player.match.win_condition]
-        bmap = await Beatmap.from_md5(player.match.map_md5)
-        asyncio.create_task(player.match.record_scores(was_playing,player.match.map_md5,bmap,win_cond))
+        asyncio.create_task(player.match.record_scores(was_playing,player.match.map_md5,None,win_cond))
         if player.match.is_scrimming:
             # determine winner, update match points & inform players.
             asyncio.create_task(player.match.update_matchpoints(was_playing))
