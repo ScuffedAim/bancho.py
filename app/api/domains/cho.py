@@ -1439,6 +1439,7 @@ class MatchCreate(BasePacket):
         player.join_match(match, self.match_data.passwd)
 
         match.chat.send_bot(f"Match created by {player.name}.")
+        match.chat.send_bot(f"You can find the match history here: [https://mp.scuffedaim.xyz/{dbid}]")
         log(f"{player} created a new multiplayer match.")
 
 
