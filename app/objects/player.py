@@ -252,6 +252,7 @@ class Player:
         self.is_bot_client = is_bot_client
         self.is_tourney_client = is_tourney_client
         self.api_key = api_key
+        self.display_ppinfo = True
 
         # avoid enqueuing packets to bot accounts.
         if self.is_bot_client:

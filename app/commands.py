@@ -1269,6 +1269,11 @@ async def server(ctx: Context) -> str | None:
         ),
     )
 
+@command(Privileges.UNRESTRICTED)
+async def NECHCEMHENTO(ctx: Context) -> str | None:
+    """Toggle to display the little pp popups when you set a score"""
+    ctx.player.display_ppinfo = not ctx.player.display_ppinfo
+    return "okej laska <3"
 
 if app.settings.DEVELOPER_MODE:
     """Advanced (& potentially dangerous) commands"""
